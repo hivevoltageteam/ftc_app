@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="TeleOp4890", group="Linear Opmode")
-//@Disabledm
+//@Disabled
 public class TeleOp4890 extends LinearOpMode {
 
         private ElapsedTime runtime = new ElapsedTime();
@@ -21,8 +21,6 @@ public class TeleOp4890 extends LinearOpMode {
         private DcMotor rackAndPinion;
         private DcMotor slide;
         private DcMotor grabber;
-
-        private ModernRoboticsI2cColorSensor colorSensor;
 
         double rightPower;
         double leftPower;
