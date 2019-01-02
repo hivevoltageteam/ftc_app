@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@Autonomous(name="AutoAwayCrater", group="Linear Opmode")
+@Autonomous(name="AutoAwayCrater4890", group="Linear Opmode")
 //@Disabled
 public class AutoAwayCrater extends LinearOpMode {
 
@@ -101,5 +101,30 @@ public class AutoAwayCrater extends LinearOpMode {
          frontRight.setPower(0);
          backRight.setPower(0);
          sleep(800);
-        }
+       }
+
+       @Override
+       public void runOpMode() {
+         telemetry.addData("Status", "Initialized");
+         telemetry.update();
+
+         frontLeft  = hardwareMap.get(DcMotor.class, "frontLeft");
+         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+         backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
+         backRight = hardwareMap.get(DcMotor.class, "backRight");
+         rackAndPinion = hardwareMap.get(DcMotor.class, "rackAndPinion");
+         slide = hardwareMap.get(DcMotor.class, "slide");
+         grabber = hardwareMap.get(DcMotor.class, "grabber");
+
+         frontLeft.setDirection(DcMotor.Direction.FORWARD);
+         frontRight.setDirection(DcMotor.Direction.REVERSE);
+         backLeft.setDirection(DcMotor.Direction.FORWARD);
+         backRight.setDirection(DcMotor.Direction.REVERSE);
+         rackAndPinion.setDirection(DcMotor.Direction.FORWARD);
+         slide.setDirection(DcMotor.Direction.FORWARD);
+         grabber.setDirection(DcMotor.Direction.FORWARD);
+
+       waitForStart();
+       landRobot();
+       }
 }
