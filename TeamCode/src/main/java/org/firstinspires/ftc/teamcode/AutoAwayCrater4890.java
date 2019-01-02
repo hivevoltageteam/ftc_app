@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="AutoAwayCrater4890", group="Linear Opmode")
 //@Disabled
-public class AutoAwayCrater extends LinearOpMode {
+public class AutoAwayCrater4890 extends LinearOpMode {
 
        private DcMotor frontLeft;
        private DcMotor frontRight;
@@ -125,6 +125,6 @@ public class AutoAwayCrater extends LinearOpMode {
          grabber.setDirection(DcMotor.Direction.FORWARD);
 
        waitForStart();
-       landRobot();
+       //landRobot();
        }
 }

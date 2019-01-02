@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name="Auto4890", group="Pushbot")
 //@Disabled
@@ -57,44 +58,63 @@ public class MainAuto4890 extends LinearOpMode {
         //grabber = hardwareMap.get(DcMotor.class, "grabber");
         //colorSensor = hardwareMap.get(ModernRoboticsI2cColorSensor.class, "colorSensor");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
         rack.setDirection(DcMotor.Direction.FORWARD);
         //slide.setDirection((DcMotor.Direction.FORWARD));
         //grabber.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
 
+        if(opModeIsActive()) {
+            driveForwardDistance(0.8, 30);
+            //driveForward(0.5, -1440);
+
+        }
+
     }
 
-    public void DriveForward(double power, int distance){
+    public void driveForwardDistance(double power, int distanceInches){
 
-        frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontRight.setTargetPosition(distance);
-        frontLeft.setTargetPosition(distance);
-        backRight.setTargetPosition(distance);
-        backLeft.setTargetPosition(distance);
+        double circumference = 3.14 * 8.89;
+        double rotationsNeeded = distanceInches/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*560);
 
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setTargetPosition(encoderDrivingTarget);
+        frontLeft.setTargetPosition(encoderDrivingTarget);
+        backRight.setTargetPosition(encoderDrivingTarget);
+        backLeft.setTargetPosition(encoderDrivingTarget);
 
         frontRight.setPower(power);
         frontLeft.setPower(power);
         backRight.setPower(power);
         backLeft.setPower(power);
 
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         while(frontRight.isBusy() && frontLeft.isBusy()
                 && backRight.isBusy() && backLeft.isBusy()){
-
+            telemetry.addData("Path", "Driving " + " inches");
+            telemetry.update();
         }
+
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
+
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
 
     }
     
