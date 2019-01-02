@@ -22,6 +22,10 @@ public class AutoAwayCrater4890 extends LinearOpMode {
        private DcMotor slide;
        private DcMotor grabber;
 
+       //colorSensor
+       public ModernRoboticsI2cColorSensor rightColorSensor = null;
+       HardwareMap hwMap = null;
+
        final double DEFAULT_POWER = 0.5;
 
        public void turnLeft(double power, int milliseconds) {
@@ -103,6 +107,11 @@ public class AutoAwayCrater4890 extends LinearOpMode {
          sleep(800);
        }
 
+       public void init(HardwareMap ahwMap) {
+         hwMap = ahwMap;
+         rightColorSensor = hwMap.get(ModernRoboticsI2cColorSensor.class, "sensor_color");
+       }
+
        @Override
        public void runOpMode() {
          telemetry.addData("Status", "Initialized");
@@ -125,6 +134,15 @@ public class AutoAwayCrater4890 extends LinearOpMode {
          grabber.setDirection(DcMotor.Direction.FORWARD);
 
        waitForStart();
+<<<<<<< HEAD
        //landRobot();
+=======
+       slideRight();
+       robot.frontColorSensor.enabled(true);
+       while (opModeIsActive()) {
+           telemetry.addData("Color Number", robot.frontColorSensor.readUnsignedByte(ModernRoboticsI2cColorSensor.Register.COLOR_NUMBER));
+           telemetry.update();
+       }
+>>>>>>> e93748e64335f0dc29010f18a463292f5835c374
        }
 }
