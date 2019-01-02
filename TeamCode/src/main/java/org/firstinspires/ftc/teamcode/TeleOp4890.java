@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -18,7 +20,7 @@ public class TeleOp4890 extends LinearOpMode {
         private DcMotor frontRight;
         private DcMotor backLeft;
         private DcMotor backRight;
-        private DcMotor rackAndPinion;
+        private DcMotor rack;
         private DcMotor slide;
         private DcMotor grabber;
 
@@ -26,6 +28,8 @@ public class TeleOp4890 extends LinearOpMode {
 
         double rightPower;
         double leftPower;
+
+        double rackPower = 1;
 
         @Override
         public void runOpMode() {
@@ -37,16 +41,16 @@ public class TeleOp4890 extends LinearOpMode {
             frontRight = hardwareMap.get(DcMotor.class, "frontRight");
             backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
             backRight = hardwareMap.get(DcMotor.class, "backRight");
-            rackAndPinion = hardwareMap.get(DcMotor.class, "rackAndPinion");
+            rack = hardwareMap.get(DcMotor.class, "rackAndPinion");
             //slide = hardwareMap.get(DcMotor.class, "slide");
             //grabber = hardwareMap.get(DcMotor.class, "grabber");
             //colorSensor = hardwareMap.get(ModernRoboticsI2cColorSensor.class, "colorSensor");
 
-            frontLeft.setDirection(DcMotor.Direction.FORWARD);
-            frontRight.setDirection(DcMotor.Direction.REVERSE);
-            backLeft.setDirection(DcMotor.Direction.FORWARD);
-            backRight.setDirection(DcMotor.Direction.REVERSE);
-            rackAndPinion.setDirection(DcMotor.Direction.FORWARD);
+            frontLeft.setDirection(DcMotor.Direction.REVERSE);
+            frontRight.setDirection(DcMotor.Direction.FORWARD);
+            backLeft.setDirection(DcMotor.Direction.REVERSE);
+            backRight.setDirection(DcMotor.Direction.FORWARD);
+            rack.setDirection(DcMotor.Direction.FORWARD);
             //slide.setDirection((DcMotor.Direction.FORWARD));
             //grabber.setDirection(DcMotor.Direction.FORWARD);
 
@@ -72,15 +76,15 @@ public class TeleOp4890 extends LinearOpMode {
                     frontRight.setPower(0.6);
                     frontLeft.setPower(0.6);
                     backLeft.setPower(-0.6);
-                    backRight.setPower(-0.6);
+                     backRight.setPower(-0.6);
                 }
 
                 if(gamepad1.y){
-                    rackAndPinion.setPower(1);
+                    rack.setPower(rackPower);
                 }else if(gamepad1.a){
-                    rackAndPinion.setPower(-1);
+                    rack.setPower(-rackPower);
                 }else{
-                    rackAndPinion.setPower(0);
+                    rack.setPower(0);
                 }
 
 //            if(gamepad1.right_bumper){
