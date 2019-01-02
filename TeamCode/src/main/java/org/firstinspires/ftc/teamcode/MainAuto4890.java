@@ -30,14 +30,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Auto4890", group="Pushbot")
 //@Disabled
-public class Autonomous4890 extends LinearOpMode {
+public class MainAuto4890 extends LinearOpMode {
 
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -78,11 +76,25 @@ public class Autonomous4890 extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
         frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
 
+        frontRight.setTargetPosition(distance);
+        frontLeft.setTargetPosition(distance);
+        backRight.setTargetPosition(distance);
+        backLeft.setTargetPosition(distance);
+
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         frontRight.setPower(power);
         frontLeft.setPower(power);
-        front.setPower(power);
-        frontRight.setPower(power);
+        backRight.setPower(power);
+        backLeft.setPower(power);
+
+        while(frontRight.isBusy() && frontLeft.isBusy()
+                && backRight.isBusy() && backLeft.isBusy()){
+
+        }
 
     }
 
