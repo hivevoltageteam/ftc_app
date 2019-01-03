@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -107,8 +108,8 @@ public class AutoAwayCrater4890 extends LinearOpMode {
          sleep(800);
        }
 
-       public void init(HardwareMap ahwMap) {
-         hwMap = ahwMap;
+       public void init(HardwareMap hwMap) {
+         hwMap = hwMap;
          rightColorSensor = hwMap.get(ModernRoboticsI2cColorSensor.class, "sensor_color");
        }
 
@@ -134,15 +135,12 @@ public class AutoAwayCrater4890 extends LinearOpMode {
          grabber.setDirection(DcMotor.Direction.FORWARD);
 
        waitForStart();
-<<<<<<< HEAD
        //landRobot();
-=======
-       slideRight();
-       robot.frontColorSensor.enabled(true);
+       //slideRight();
+       //robot.frontColorSensor.enabled(true);
        while (opModeIsActive()) {
-           telemetry.addData("Color Number", robot.frontColorSensor.readUnsignedByte(ModernRoboticsI2cColorSensor.Register.COLOR_NUMBER));
+           //telemetry.addData("Color Number", robot.frontColorSensor.readUnsignedByte(ModernRoboticsI2cColorSensor.Register.COLOR_NUMBER));
            telemetry.update();
        }
->>>>>>> e93748e64335f0dc29010f18a463292f5835c374
        }
 }

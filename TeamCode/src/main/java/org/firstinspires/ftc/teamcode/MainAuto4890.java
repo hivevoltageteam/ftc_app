@@ -34,7 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name="Auto4890", group="Pushbot")
+@Autonomous(name="Auto4890", group="")
 //@Disabled
 public class MainAuto4890 extends LinearOpMode {
 
@@ -80,17 +80,69 @@ public class MainAuto4890 extends LinearOpMode {
 
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        double circumference = 3.14 * 8.89;
+        double rotationsNeeded = distanceInches/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*538);
+
+        int FR_offset = 0;
+        int FL_offset = 0;
+        int BR_offset = 0;
+        int BL_offset = 0;
+
+        frontRight.setTargetPosition(0);
+        frontLeft.setTargetPosition(0);
+        backRight.setTargetPosition(0);
+        backLeft.setTargetPosition(-538);
+
+        frontRight.setPower(power);
+        frontLeft.setPower(power);
+        backRight.setPower(power);
+        backLeft.setPower(power);
+
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while(frontRight.isBusy() && frontLeft.isBusy()
+                && backRight.isBusy() && backLeft.isBusy()){
+            telemetry.addData("Path", "Driving " + " inches");
+            telemetry.update();
+        }
+
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
+
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+
+    }
+
+    public void drivesSideDistance(double power, int distanceInches){
+
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         double circumference = 3.14 * 8.89;
         double rotationsNeeded = distanceInches/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*560);
 
-        frontRight.setTargetPosition(encoderDrivingTarget);
-        frontLeft.setTargetPosition(encoderDrivingTarget);
-        backRight.setTargetPosition(encoderDrivingTarget);
-        backLeft.setTargetPosition(encoderDrivingTarget);
+        int FR_offset = 0;
+        int FL_offset = 500;
+        int BR_offset = 0;
+        int BL_offset = 500;
+
+        frontRight.setTargetPosition(encoderDrivingTarget + FR_offset);
+        frontLeft.setTargetPosition(encoderDrivingTarget + FL_offset);
+        backRight.setTargetPosition(encoderDrivingTarget + BR_offset);
+        backLeft.setTargetPosition(encoderDrivingTarget + BL_offset);
 
         frontRight.setPower(power);
         frontLeft.setPower(power);

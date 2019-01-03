@@ -44,10 +44,10 @@ public class TeleOp4890 extends LinearOpMode {
             //grabber = hardwareMap.get(DcMotor.class, "grabber");
             //colorSensor = hardwareMap.get(ModernRoboticsI2cColorSensor.class, "colorSensor");
 
-            frontLeft.setDirection(DcMotor.Direction.REVERSE);
-            frontRight.setDirection(DcMotor.Direction.FORWARD);
-            backLeft.setDirection(DcMotor.Direction.REVERSE);
-            backRight.setDirection(DcMotor.Direction.FORWARD);
+            frontLeft.setDirection(DcMotor.Direction.FORWARD);
+            frontRight.setDirection(DcMotor.Direction.REVERSE);
+            backLeft.setDirection(DcMotor.Direction.FORWARD);
+            backRight.setDirection(DcMotor.Direction.REVERSE);
             rack.setDirection(DcMotor.Direction.FORWARD);
             //slide.setDirection((DcMotor.Direction.FORWARD));
             //grabber.setDirection(DcMotor.Direction.FORWARD);
@@ -74,15 +74,87 @@ public class TeleOp4890 extends LinearOpMode {
                     frontRight.setPower(0.6);
                     frontLeft.setPower(0.6);
                     backLeft.setPower(-0.6);
-                     backRight.setPower(-0.6);
+                    backRight.setPower(-0.6);
                 }
 
+//                if(gamepad1.y){
+//                    rack.setPower(rackPower);
+//                }else if(gamepad1.a){
+//                    rack.setPower(-rackPower);
+//                }else{
+//                    rack.setPower(0);
+//                }
+
+                if(gamepad1.dpad_left){
+                    frontRight.setPower(0.6);
+                    frontLeft.setPower(0.6);
+                    backLeft.setPower(-0.6);
+                    backRight.setPower(-0.6);
+                }
+
+                if(gamepad1.dpad_right){
+                    frontRight.setPower(-0.6);
+                    frontLeft.setPower(-0.6);
+                    backLeft.setPower(0.6);
+                    backRight.setPower(0.6);
+                }
+
+//                if(gamepad1.y){
+//                    rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//                    double circumference = 3.14 * 8.89;
+//                    double rotationsNeeded = 10/circumference;
+//                    int encoderDrivingTarget = (int)(rotationsNeeded*560);
+//
+//                    int rack_offset = 0;
+//
+//                    rack.setTargetPosition(encoderDrivingTarget + rack_offset);
+//
+//                    rack.setPower(0.5);
+//
+//                    rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//                    rack.setPower(0);
+//
+//                    telemetry.addData("Path", "Complete");
+//                    telemetry.update();
+//                }
+//
+//                if(gamepad1.a){
+//                    rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//                    double circumference = 3.14 * 8.89;
+//                    double rotationsNeeded = 10/circumference;
+//                    int encoderDrivingTarget = (int)(rotationsNeeded*560);
+//
+//                    int rack_offset = 0;
+//
+//                    rack.setTargetPosition(encoderDrivingTarget + rack_offset);
+//
+//                    rack.setPower(0.5);
+//
+//                    rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//                    rack.setPower(0);
+//
+//                    telemetry.addData("Path", "Complete");
+//                    telemetry.update();
+//                }
+
                 if(gamepad1.y){
-                    rack.setPower(rackPower);
-                }else if(gamepad1.a){
-                    rack.setPower(-rackPower);
-                }else{
-                    rack.setPower(0);
+                    frontRight.setPower(1);
+                }
+
+                if(gamepad1.x){
+                    frontLeft.setPower(1);
+                }
+
+                if(gamepad1.b){
+                    backRight.setPower(1);
+                }
+
+                if(gamepad1.a){
+                    backLeft.setPower(1);
                 }
 
 //            if(gamepad1.right_bumper){
@@ -92,10 +164,6 @@ public class TeleOp4890 extends LinearOpMode {
 //            }else{
 //                slide.setPower(0);
 //            }
-
-                telemetry.addData("Status", "Run Time: " + runtime.toString());
-                telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-                telemetry.update();
             }
         }
     }
