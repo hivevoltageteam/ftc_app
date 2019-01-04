@@ -31,10 +31,26 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name="Auto4890", group="")
+import java.util.ArrayList;
+
+
+
+/*
+
+Things to do:
+- Write a method to return the color value
+- Write Auto
+- Test Auto
+- Write TeleOp
+ */
+
+
+
+@Autonomous(name="Auto4890pizdec", group="")
 //@Disabled
 public class MainAuto4890 extends LinearOpMode {
 
@@ -46,6 +62,9 @@ public class MainAuto4890 extends LinearOpMode {
     private DcMotor slide;
     private DcMotor grabber;
 
+//    private ColorSensor colorSensorBackRight;
+//    private ColorSensor colorSensorBackLeft;
+
     @Override
     public void runOpMode() {
 
@@ -54,53 +73,75 @@ public class MainAuto4890 extends LinearOpMode {
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         rack = hardwareMap.get(DcMotor.class, "rackAndPinion");
-        //slide = hardwareMap.get(DcMotor.class, "slide");
-        //grabber = hardwareMap.get(DcMotor.class, "grabber");
-        //colorSensor = hardwareMap.get(ModernRoboticsI2cColorSensor.class, "colorSensor");
+//        colorSensorBackRight = hardwareMap.get(ColorSensor.class, "csbr");
+//        colorSensorBackLeft = hardwareMap.get(ColorSensor.class, "csbl");
 
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-        rack.setDirection(DcMotor.Direction.FORWARD);
-        //slide.setDirection((DcMotor.Direction.FORWARD));
-        //grabber.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        rack.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
 
-        if(opModeIsActive()) {
-            driveForwardDistance(0.8, 30);
-            //driveForward(0.5, -1440);
+            while(opModeIsActive()) {
 
-        }
+//                telemetry.addData("Red: ", colorSensorBackRight.red());
+//                telemetry.addData("Green: ", colorSensorBackRight.green());
+//                telemetry.addData("Blue: ", colorSensorBackRight.blue());
+//                telemetry.addData("ARGB: ", colorSensorBackRight.argb());
+//
+//                telemetry.addData("Red: ", colorSensorBackLeft.red());
+//                telemetry.addData("Green: ", colorSensorBackLeft.green());
+//                telemetry.addData("Blue: ", colorSensorBackLeft.blue());
+//                telemetry.addData("ARGB: ", colorSensorBackLeft.argb());
+
+                /*actual teleop
+                land();
+                drive(0.5, 33.94);
+                 */
+
+                telemetry.update();
+                /*
+                turn(0.5, 90);
+                drive(0.5, 5);
+                sleep(4000);
+                turn(0.5, -180);
+                turn(0.5, 360);
+                */
+            }
 
     }
 
-    public void driveForwardDistance(double power, int distanceInches){
+    public void drive(double power, double inches){
 
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        double circumference = 3.14 * 8.89;
-        double rotationsNeeded = distanceInches/circumference;
-        int encoderDrivingTarget = (int)(rotationsNeeded*538);
+        //this is the amount of inches the motor travels per 1440/tick
+        double inchesPerTick = 0.027;
+        // turns is equal to the amount of turns
+        // required to achieved the amount of inches required
+        // ~ that is what she said
+        double turns = (inches * inchesPerTick);
 
-        int FR_offset = 0;
-        int FL_offset = 0;
-        int BR_offset = 0;
-        int BL_offset = 0;
+        //double circumference = 3.14 * 8.89;
+        //double rotationsNeeded = turns/circumference;
+        double offset = 0.6;
+        int tick = 1440;
+        int encoderDrivingTarget = (int)(tick * turns);
 
-        frontRight.setTargetPosition(0);
-        frontLeft.setTargetPosition(0);
-        backRight.setTargetPosition(0);
-        backLeft.setTargetPosition(-538);
+        frontRight.setTargetPosition(encoderDrivingTarget);
+        frontLeft.setTargetPosition(encoderDrivingTarget);
+        backRight.setTargetPosition(encoderDrivingTarget);
+        backLeft.setTargetPosition(encoderDrivingTarget);
 
         frontRight.setPower(power);
-        frontLeft.setPower(power);
+        frontLeft.setPower(-power * offset);
         backRight.setPower(power);
-        backLeft.setPower(power);
+        backLeft.setPower(-power * offset);
 
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -113,41 +154,134 @@ public class MainAuto4890 extends LinearOpMode {
             telemetry.update();
         }
 
-        frontRight.setPower(0);
-        frontLeft.setPower(0);
-        backRight.setPower(0);
-        backLeft.setPower(0);
-
+        double stopping = 1;
+        while(stopping > 0) {
+            frontRight.setPower(power * stopping);
+            frontLeft.setPower(-power * stopping);
+            backRight.setPower(power * stopping);
+            backLeft.setPower(-power * stopping);
+            sleep(100);
+            stopping -= 0.1;
+        }
         telemetry.addData("Path", "Complete");
         telemetry.update();
 
     }
 
-    public void drivesSideDistance(double power, int distanceInches){
+    //------------------
+    //------------------
+    //------------------
+    //------------------
+    //------------------
+
+    public void turn(double power, double degrees){
+
+        double inches;
+        double inchesPerTick;
+        double turns;
+        double offset;
+        double stopping;
+        double TEMPdegrees;
+        int tick;
+        int encoderDrivingTarget;
+
+
+        while(degrees > 0){
+
+            if(degrees > 90){
+                TEMPdegrees = 90;
+            }
+            else{
+                TEMPdegrees = degrees;
+            }
+
+            inches = TEMPdegrees * 0.18;
+
+            //this is the amount of inches the motor travels per 1440/tick
+            inchesPerTick = 0.027;
+            // turns is equal to the amount of turns
+            // required to achieved the amount of inches required
+            // ~ that is what she said
+            turns = (inches * inchesPerTick);
+
+            //double circumference = 3.14 * 8.89;
+            //double rotationsNeeded = turns/circumference;
+            offset = 0.6;
+            tick = 1440;
+            encoderDrivingTarget = (int)(tick * turns);
+
+            frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            frontRight.setTargetPosition(-encoderDrivingTarget);
+            frontLeft.setTargetPosition(encoderDrivingTarget);
+            backRight.setTargetPosition(-encoderDrivingTarget);
+            backLeft.setTargetPosition(encoderDrivingTarget);
+
+            frontRight.setPower(power);
+            frontLeft.setPower(-power * offset);
+            backRight.setPower(power);
+            backLeft.setPower(-power * offset);
+
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    //        while(frontRight.isBusy() && frontLeft.isBusy()
+    //                && backRight.isBusy() && backLeft.isBusy()){
+    //            telemetry.addData("Path", "Driving " + " inches");
+    //            telemetry.update();
+    //        }
+
+            stopping = 1;
+            while(stopping > 0) {
+                frontRight.setPower(power * stopping);
+                frontLeft.setPower(-power * stopping);
+                backRight.setPower(power * stopping);
+                backLeft.setPower(-power * stopping);
+                sleep(100);
+                stopping -= 0.1;
+            }
+
+            degrees -= 90;
+        }
+
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+    }
+
+    public void driveSide(double power, double inches){
 
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        double circumference = 3.14 * 8.89;
-        double rotationsNeeded = distanceInches/circumference;
-        int encoderDrivingTarget = (int)(rotationsNeeded*560);
+        //this is the amount of inches the motor travels per 1440/tick
+        double inchesPerTick = 0.027;
+        // turns is equal to the amount of turns
+        // required to achieved the amount of inches required
+        // ~ that is what she said
+        double turns = (inches * inchesPerTick);
 
-        int FR_offset = 0;
-        int FL_offset = 500;
-        int BR_offset = 0;
-        int BL_offset = 500;
+        //double circumference = 3.14 * 8.89;
+        //double rotationsNeeded = turns/circumference;
+        double offset = 0.6;
+        int tick = 1440;
+        int encoderDrivingTarget = (int)(tick * turns);
 
-        frontRight.setTargetPosition(encoderDrivingTarget + FR_offset);
-        frontLeft.setTargetPosition(encoderDrivingTarget + FL_offset);
-        backRight.setTargetPosition(encoderDrivingTarget + BR_offset);
-        backLeft.setTargetPosition(encoderDrivingTarget + BL_offset);
+        frontRight.setTargetPosition(-encoderDrivingTarget);
+        frontLeft.setTargetPosition(encoderDrivingTarget);
+        backRight.setTargetPosition(encoderDrivingTarget);
+        backLeft.setTargetPosition(-encoderDrivingTarget);
 
         frontRight.setPower(power);
-        frontLeft.setPower(power);
+        frontLeft.setPower(-power * offset);
         backRight.setPower(power);
-        backLeft.setPower(power);
+        backLeft.setPower(-power * offset);
 
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -160,13 +294,45 @@ public class MainAuto4890 extends LinearOpMode {
             telemetry.update();
         }
 
-        frontRight.setPower(0);
-        frontLeft.setPower(0);
-        backRight.setPower(0);
-        backLeft.setPower(0);
-
+        double stopping = 1;
+        while(stopping > 0) {
+            frontRight.setPower(power * stopping);
+            frontLeft.setPower(-power * stopping);
+            backRight.setPower(power * stopping);
+            backLeft.setPower(-power * stopping);
+            sleep(100);
+            stopping -= 0.1;
+        }
         telemetry.addData("Path", "Complete");
         telemetry.update();
+
+    }
+
+//    public int scanColor(){
+//
+//        int argbBackRight = colorSensorBackRight.argb();
+//        int argbBackLeft = colorSensorBackLeft.argb();
+//
+//        if(argbBackLeft >= 40 && argbBackLeft <= 80 && argbBackRight >= 40 && )
+//
+//        return 1;
+//    }
+
+
+
+    public void land(){
+        rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rack.setTargetPosition(-(int)(538 * 3.5));
+
+        rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rack.setTargetPosition((int)(538 * 0.5));
+
+        drive(0.5, 2);
+
+        rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rack.setTargetPosition((int)(538 * 0.5));
+
+        rack.setPower(0.5);
 
     }
 

@@ -23,11 +23,10 @@ public class TeleOp4890 extends LinearOpMode {
         private DcMotor rack;
         private DcMotor slide;
         private DcMotor grabber;
+        private DcMotor flipper;
 
         double rightPower;
         double leftPower;
-
-        double rackPower = 1;
 
         @Override
         public void runOpMode() {
@@ -40,17 +39,44 @@ public class TeleOp4890 extends LinearOpMode {
             backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
             backRight = hardwareMap.get(DcMotor.class, "backRight");
             rack = hardwareMap.get(DcMotor.class, "rackAndPinion");
-            //slide = hardwareMap.get(DcMotor.class, "slide");
+            slide = hardwareMap.get(DcMotor.class, "slide");
             //grabber = hardwareMap.get(DcMotor.class, "grabber");
-            //colorSensor = hardwareMap.get(ModernRoboticsI2cColorSensor.class, "colorSensor");
+            //flipper = hardwareMap.get(DcMotor.class, "flipper");
 
-            frontLeft.setDirection(DcMotor.Direction.FORWARD);
-            frontRight.setDirection(DcMotor.Direction.REVERSE);
-            backLeft.setDirection(DcMotor.Direction.FORWARD);
-            backRight.setDirection(DcMotor.Direction.REVERSE);
+            frontLeft.setDirection(DcMotor.Direction.REVERSE);
+            frontRight.setDirection(DcMotor.Direction.FORWARD);
+            backLeft.setDirection(DcMotor.Direction.REVERSE);
+            backRight.setDirection(DcMotor.Direction.FORWARD);
             rack.setDirection(DcMotor.Direction.FORWARD);
-            //slide.setDirection((DcMotor.Direction.FORWARD));
+            slide.setDirection((DcMotor.Direction.FORWARD));
             //grabber.setDirection(DcMotor.Direction.FORWARD);
+            //flipper = hardwareMap.get(DcMotor.class, "flipper");
+
+
+//            ////////////////////////////////////
+//            //3.5
+//            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//            //this is the amount of inches the motor travels per 1440/tick
+//            double inchesPerTick = 0.027;
+//            // turns is equal to the amount of turns
+//            // required to achieved the amount of inches required
+//            // ~ that is what she said
+//            double turns = (inches * inchesPerTick);
+//
+//            //double circumference = 3.14 * 8.89;
+//            //double rotationsNeeded = turns/circumference;
+//            double offset = 0.6;
+//            int tick = 1440;
+//            int encoderDrivingTarget = (int)(tick * turns);
+//
+//            frontRight.setTargetPosition(encoderDrivingTarget);
+//
+//            frontRight.setPower(power);
+//
+//            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//            /////////////////////////////////
 
             waitForStart();
             runtime.reset();
@@ -60,110 +86,72 @@ public class TeleOp4890 extends LinearOpMode {
                 rightPower = gamepad1.right_stick_y;
                 leftPower = gamepad1.left_stick_y;
 
+                if(gamepad1.dpad_right){
+                    frontRight.setPower(0.6);
+                    frontLeft.setPower(-0.6);
+                    backLeft.setPower(0.6);
+                    backRight.setPower(-0.6);
+                }else if(gamepad1.dpad_left) {
+                    frontRight.setPower(-0.6);
+                    frontLeft.setPower(0.6);
+                    backLeft.setPower(-0.6);
+                    backRight.setPower(0.6);
+                }else{
+                    frontRight.setPower(0);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    backRight.setPower(0);
+                }
+
+//                if(gamepad1.y){
+//                    rack.setPower(1);
+//                }else if(gamepad1.a){
+//                    rack.setPower(-1);
+//                }else{
+//                    rack.setPower(0);
+//                }
+
+//                if(gamepad1.y){
+//                        rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                        int encoderDrivingTarget = (int)(538 * 3.5);
+//
+//                        rack.setTargetPosition(encoderDrivingTarget);
+//
+//                        rack.setPower(0.5);
+//
+//                        rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                }else if(gamepad1.a){
+//                        rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                        int encoderDrivingTarget = (int) (538 * 3.5);
+//
+//                        rack.setTargetPosition(-encoderDrivingTarget);
+//
+//                        rack.setPower(0.5);
+//
+//                        rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                if(gamepad1.y){
+                    rack.setPower(1);
+                }else if(gamepad1.a) {
+                    rack.setPower(-1);
+                }else{
+                    rack.setPower(0);
+
+                }
+
+                if(gamepad1.dpad_up){
+                    slide.setPower(1);
+                }else if(gamepad1.dpad_down){
+                    slide.setPower(-1);
+                }else{
+                    slide.setPower(0);
+                }
+
+
                 frontLeft.setPower((0.6)*leftPower);
                 frontRight.setPower((0.6)*rightPower);
                 backLeft.setPower((0.6)*leftPower);
                 backRight.setPower((0.6)*rightPower);
 
-                if(gamepad1.dpad_right){
-                    frontRight.setPower(-0.6);
-                    frontLeft.setPower(-0.6);
-                    backLeft.setPower(0.6);
-                    backRight.setPower(0.6);
-                }else if(gamepad1.dpad_left) {
-                    frontRight.setPower(0.6);
-                    frontLeft.setPower(0.6);
-                    backLeft.setPower(-0.6);
-                    backRight.setPower(-0.6);
-                }
-
-//                if(gamepad1.y){
-//                    rack.setPower(rackPower);
-//                }else if(gamepad1.a){
-//                    rack.setPower(-rackPower);
-//                }else{
-//                    rack.setPower(0);
-//                }
-
-                if(gamepad1.dpad_left){
-                    frontRight.setPower(0.6);
-                    frontLeft.setPower(0.6);
-                    backLeft.setPower(-0.6);
-                    backRight.setPower(-0.6);
-                }
-
-                if(gamepad1.dpad_right){
-                    frontRight.setPower(-0.6);
-                    frontLeft.setPower(-0.6);
-                    backLeft.setPower(0.6);
-                    backRight.setPower(0.6);
-                }
-
-//                if(gamepad1.y){
-//                    rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//
-//                    double circumference = 3.14 * 8.89;
-//                    double rotationsNeeded = 10/circumference;
-//                    int encoderDrivingTarget = (int)(rotationsNeeded*560);
-//
-//                    int rack_offset = 0;
-//
-//                    rack.setTargetPosition(encoderDrivingTarget + rack_offset);
-//
-//                    rack.setPower(0.5);
-//
-//                    rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//
-//                    rack.setPower(0);
-//
-//                    telemetry.addData("Path", "Complete");
-//                    telemetry.update();
-//                }
-//
-//                if(gamepad1.a){
-//                    rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//
-//                    double circumference = 3.14 * 8.89;
-//                    double rotationsNeeded = 10/circumference;
-//                    int encoderDrivingTarget = (int)(rotationsNeeded*560);
-//
-//                    int rack_offset = 0;
-//
-//                    rack.setTargetPosition(encoderDrivingTarget + rack_offset);
-//
-//                    rack.setPower(0.5);
-//
-//                    rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//
-//                    rack.setPower(0);
-//
-//                    telemetry.addData("Path", "Complete");
-//                    telemetry.update();
-//                }
-
-                if(gamepad1.y){
-                    frontRight.setPower(1);
-                }
-
-                if(gamepad1.x){
-                    frontLeft.setPower(1);
-                }
-
-                if(gamepad1.b){
-                    backRight.setPower(1);
-                }
-
-                if(gamepad1.a){
-                    backLeft.setPower(1);
-                }
-
-//            if(gamepad1.right_bumper){
-//                slide.setPower(1);
-//            }else if(gamepad1.left_bumper){
-//                slide.setPower(-1);
-//            }else{
-//                slide.setPower(0);
-//            }
             }
         }
     }
