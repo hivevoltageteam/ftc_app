@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="TeleOp4890Wifi", group="Linear Opmode")
+@TeleOp(name="TeleOp4890Inspection", group="Linear Opmode")
 //@Disabled
-public class TeleOp4890Wifi extends LinearOpMode {
+public class TeleOp4890 extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -40,8 +40,8 @@ public class TeleOp4890Wifi extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         rack = hardwareMap.get(DcMotor.class, "rackAndPinion");
         slide = hardwareMap.get(DcMotor.class, "slide");
-        //grabber = hardwareMap.get(DcMotor.class, "grabber");
-        //flipper = hardwareMap.get(DcMotor.class, "flipper");
+        grabber = hardwareMap.get(DcMotor.class, "grabber");
+        flipper = hardwareMap.get(DcMotor.class, "flipper");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
@@ -145,14 +145,22 @@ public class TeleOp4890Wifi extends LinearOpMode {
             }else{
                 slide.setPower(0);
             }
-//
-//                if(gamepad1.right_bumper){
-//                    grabber.setPower(1);
-//                }else if(gamepad1.left_bumper){
-//                    grabber.setPower(-1);
-//                }else{
-//                    grabber.setPower(0);
-//                }
+
+                if(gamepad1.right_bumper){
+                    flipper.setPower(1);
+                }else if(gamepad1.left_bumper){
+                    flipper.setPower(-1);
+                }else{
+                    flipper.setPower(0);
+                }
+
+            if(gamepad1.x){
+                grabber.setPower(1);
+            }else if(gamepad1.b){
+                grabber.setPower(-1);
+            }else{
+                grabber.setPower(0);
+            }
 
 
             frontLeft.setPower((0.6)*leftPower);
