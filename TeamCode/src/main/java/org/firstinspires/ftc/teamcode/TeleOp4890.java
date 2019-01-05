@@ -10,47 +10,47 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="TeleOp4890", group="Linear Opmode")
+@TeleOp(name="TeleOp4890Wifi", group="Linear Opmode")
 //@Disabled
-public class TeleOp4890 extends LinearOpMode {
+public class TeleOp4890Wifi extends LinearOpMode {
 
-        private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
-        private DcMotor frontLeft;
-        private DcMotor frontRight;
-        private DcMotor backLeft;
-        private DcMotor backRight;
-        private DcMotor rack;
-        private DcMotor slide;
-        private DcMotor grabber;
-        private DcMotor flipper;
+    private DcMotor frontLeft;
+    private DcMotor frontRight;
+    private DcMotor backLeft;
+    private DcMotor backRight;
+    private DcMotor rack;
+    private DcMotor slide;
+    private DcMotor grabber;
+    private DcMotor flipper;
 
-        double rightPower;
-        double leftPower;
+    double rightPower;
+    double leftPower;
 
-        @Override
-        public void runOpMode() {
-            telemetry.addData(".", ".");
+    @Override
+    public void runOpMode() {
+        telemetry.addData(".", ".");
 
-            telemetry.update();
+        telemetry.update();
 
-            frontLeft  = hardwareMap.get(DcMotor.class, "frontLeft");
-            frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-            backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
-            backRight = hardwareMap.get(DcMotor.class, "backRight");
-            rack = hardwareMap.get(DcMotor.class, "rackAndPinion");
-            slide = hardwareMap.get(DcMotor.class, "slide");
-            //grabber = hardwareMap.get(DcMotor.class, "grabber");
-            //flipper = hardwareMap.get(DcMotor.class, "flipper");
+        frontLeft  = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
+        rack = hardwareMap.get(DcMotor.class, "rackAndPinion");
+        slide = hardwareMap.get(DcMotor.class, "slide");
+        //grabber = hardwareMap.get(DcMotor.class, "grabber");
+        //flipper = hardwareMap.get(DcMotor.class, "flipper");
 
-            frontLeft.setDirection(DcMotor.Direction.REVERSE);
-            frontRight.setDirection(DcMotor.Direction.FORWARD);
-            backLeft.setDirection(DcMotor.Direction.REVERSE);
-            backRight.setDirection(DcMotor.Direction.FORWARD);
-            rack.setDirection(DcMotor.Direction.FORWARD);
-            slide.setDirection((DcMotor.Direction.FORWARD));
-            //grabber.setDirection(DcMotor.Direction.FORWARD);
-            //flipper = hardwareMap.get(DcMotor.class, "flipper");
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        rack.setDirection(DcMotor.Direction.FORWARD);
+        slide.setDirection((DcMotor.Direction.FORWARD));
+        //grabber.setDirection(DcMotor.Direction.FORWARD);
+        //flipper = hardwareMap.get(DcMotor.class, "flipper");
 
 
 //            ////////////////////////////////////
@@ -78,30 +78,30 @@ public class TeleOp4890 extends LinearOpMode {
 //
 //            /////////////////////////////////
 
-            waitForStart();
-            runtime.reset();
+        waitForStart();
+        runtime.reset();
 
-            while (opModeIsActive()) {
+        while (opModeIsActive()) {
 
-                rightPower = gamepad1.right_stick_y;
-                leftPower = gamepad1.left_stick_y;
+            rightPower = gamepad1.right_stick_y;
+            leftPower = gamepad1.left_stick_y;
 
-                if(gamepad1.dpad_right){
-                    frontRight.setPower(0.6);
-                    frontLeft.setPower(-0.6);
-                    backLeft.setPower(0.6);
-                    backRight.setPower(-0.6);
-                }else if(gamepad1.dpad_left) {
-                    frontRight.setPower(-0.6);
-                    frontLeft.setPower(0.6);
-                    backLeft.setPower(-0.6);
-                    backRight.setPower(0.6);
-                }else{
-                    frontRight.setPower(0);
-                    frontLeft.setPower(0);
-                    backLeft.setPower(0);
-                    backRight.setPower(0);
-                }
+            if(gamepad1.dpad_right){
+                frontRight.setPower(0.6);
+                frontLeft.setPower(-0.6);
+                backLeft.setPower(0.6);
+                backRight.setPower(-0.6);
+            }else if(gamepad1.dpad_left) {
+                frontRight.setPower(-0.6);
+                frontLeft.setPower(0.6);
+                backLeft.setPower(-0.6);
+                backRight.setPower(0.6);
+            }else{
+                frontRight.setPower(0);
+                frontLeft.setPower(0);
+                backLeft.setPower(0);
+                backRight.setPower(0);
+            }
 
 //                if(gamepad1.y){
 //                    rack.setPower(1);
@@ -129,29 +129,37 @@ public class TeleOp4890 extends LinearOpMode {
 //                        rack.setPower(0.5);
 //
 //                        rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                if(gamepad1.y){
-                    rack.setPower(1);
-                }else if(gamepad1.a) {
-                    rack.setPower(-1);
-                }else{
-                    rack.setPower(0);
-
-                }
-
-                if(gamepad1.dpad_up){
-                    slide.setPower(1);
-                }else if(gamepad1.dpad_down){
-                    slide.setPower(-1);
-                }else{
-                    slide.setPower(0);
-                }
-
-
-                frontLeft.setPower((0.6)*leftPower);
-                frontRight.setPower((0.6)*rightPower);
-                backLeft.setPower((0.6)*leftPower);
-                backRight.setPower((0.6)*rightPower);
+            if(gamepad1.y){
+                rack.setPower(1);
+            }else if(gamepad1.a) {
+                rack.setPower(-1);
+            }else{
+                rack.setPower(0);
 
             }
+
+            if(gamepad1.dpad_up){
+                slide.setPower(1);
+            }else if(gamepad1.dpad_down){
+                slide.setPower(-1);
+            }else{
+                slide.setPower(0);
+            }
+//
+//                if(gamepad1.right_bumper){
+//                    grabber.setPower(1);
+//                }else if(gamepad1.left_bumper){
+//                    grabber.setPower(-1);
+//                }else{
+//                    grabber.setPower(0);
+//                }
+
+
+            frontLeft.setPower((0.6)*leftPower);
+            frontRight.setPower((0.6)*rightPower);
+            backLeft.setPower((0.6)*leftPower);
+            backRight.setPower((0.6)*rightPower);
+
         }
     }
+}
