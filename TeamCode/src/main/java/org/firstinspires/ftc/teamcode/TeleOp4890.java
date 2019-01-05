@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="TeleOp4890Inspection", group="Linear Opmode")
+@TeleOp(name="TeleOp4890Compwifi", group="Linear Opmode")
 //@Disabled
-public class TeleOp4890 extends LinearOpMode {
+public class TeleOp4890Wifi extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -49,34 +49,7 @@ public class TeleOp4890 extends LinearOpMode {
         backRight.setDirection(DcMotor.Direction.FORWARD);
         rack.setDirection(DcMotor.Direction.FORWARD);
         slide.setDirection((DcMotor.Direction.FORWARD));
-        //grabber.setDirection(DcMotor.Direction.FORWARD);
-        //flipper = hardwareMap.get(DcMotor.class, "flipper");
-
-
-//            ////////////////////////////////////
-//            //3.5
-//            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//
-//            //this is the amount of inches the motor travels per 1440/tick
-//            double inchesPerTick = 0.027;
-//            // turns is equal to the amount of turns
-//            // required to achieved the amount of inches required
-//            // ~ that is what she said
-//            double turns = (inches * inchesPerTick);
-//
-//            //double circumference = 3.14 * 8.89;
-//            //double rotationsNeeded = turns/circumference;
-//            double offset = 0.6;
-//            int tick = 1440;
-//            int encoderDrivingTarget = (int)(tick * turns);
-//
-//            frontRight.setTargetPosition(encoderDrivingTarget);
-//
-//            frontRight.setPower(power);
-//
-//            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//
-//            /////////////////////////////////
+        grabber.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
         runtime.reset();
@@ -103,32 +76,6 @@ public class TeleOp4890 extends LinearOpMode {
                 backRight.setPower(0);
             }
 
-//                if(gamepad1.y){
-//                    rack.setPower(1);
-//                }else if(gamepad1.a){
-//                    rack.setPower(-1);
-//                }else{
-//                    rack.setPower(0);
-//                }
-
-//                if(gamepad1.y){
-//                        rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//                        int encoderDrivingTarget = (int)(538 * 3.5);
-//
-//                        rack.setTargetPosition(encoderDrivingTarget);
-//
-//                        rack.setPower(0.5);
-//
-//                        rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                }else if(gamepad1.a){
-//                        rack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//                        int encoderDrivingTarget = (int) (538 * 3.5);
-//
-//                        rack.setTargetPosition(-encoderDrivingTarget);
-//
-//                        rack.setPower(0.5);
-//
-//                        rack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             if(gamepad1.y){
                 rack.setPower(1);
             }else if(gamepad1.a) {
@@ -146,13 +93,13 @@ public class TeleOp4890 extends LinearOpMode {
                 slide.setPower(0);
             }
 
-                if(gamepad1.right_bumper){
-                    flipper.setPower(1);
-                }else if(gamepad1.left_bumper){
-                    flipper.setPower(-1);
-                }else{
-                    flipper.setPower(0);
-                }
+            if(gamepad1.right_trigger > 0){
+                flipper.setPower(0.5);
+            }else if(gamepad1.left_trigger > 0){
+                flipper.setPower(-0.5);
+            }else{
+                flipper.setPower(0);
+            }
 
             if(gamepad1.x){
                 grabber.setPower(1);
