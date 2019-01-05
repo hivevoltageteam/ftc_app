@@ -86,9 +86,10 @@ public class AAFCTime extends LinearOpMode {
 
         if(opModeIsActive()) {
 
-            // land();
-            // drive(0.5, 0);
-            // turn(0.5, 180);
+            land();
+            driveForward(0.5, 0);
+            sideLeft(0.5, 0);
+            turnLeft(0.5, 180);
             // drive(0.5, 0);
             // driveSide(0.5, -0);
             // if (colorSensorBackLeft.blue() < colorSensorBackRight.blue()) {
@@ -111,13 +112,13 @@ public class AAFCTime extends LinearOpMode {
 
 
             //500 milliseconds = 12 inches
-            drive(0.25, 1000);
+            driveForward(0.25, 1000);
 
         }
 
     }
 
-    public void drive(double power, int milliseconds){
+    public void driveForward(double power, int milliseconds){
 
         //int milliseconds = inches * 0;
 
@@ -135,26 +136,61 @@ public class AAFCTime extends LinearOpMode {
 
     }
 
-    public void turn(double power, int degrees){
+    public void turnLeft(double power, int milliseconds){
 
-        int milliseconds = degrees * 0;
+        //int milliseconds = degrees * 0;
 
         frontRight.setPower(power);
-        frontLeft.setPower(power);
-        backLeft.setPower(power);
+        frontLeft.setPower(-power);
+        backLeft.setPower(-power);
         backRight.setPower(power);
         sleep(milliseconds);
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
     }
 
-    public void driveSide(double power, int inches){
+    public void turnRight(double power, int milliseconds){
 
-        int milliseconds = inches * 0;
+        //int milliseconds = degrees * 0;
 
-        frontRight.setPower(power);
+        frontRight.setPower(-power);
         frontLeft.setPower(power);
         backLeft.setPower(power);
+        backRight.setPower(-power);
+        sleep(milliseconds);
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
+
+    public void sideLeft(double power, int milliseconds){
+
+        frontRight.setPower(power);
+        frontLeft.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+        sleep(milliseconds);
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+
+    }
+
+    public void sideRight(double power, int milliseconds){
+
+        frontRight.setPower(-power);
+        frontLeft.setPower(power);
+        backLeft.setPower(-power);
         backRight.setPower(power);
         sleep(milliseconds);
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
 
     }
 
