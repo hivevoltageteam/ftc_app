@@ -73,8 +73,8 @@ public class AANCTime extends LinearOpMode {
         grabber = hardwareMap.get(DcMotor.class, "grabber");
         flipper = hardwareMap.get(DcMotor.class, "flipper");
 
-        colorSensorBackRight = hardwareMap.get(ColorSensor.class, "csbr");
-        colorSensorBackLeft = hardwareMap.get(ColorSensor.class, "csbl");
+        colorSensorBackLeft = hardwareMap.get(ColorSensor.class, "csbr");
+        colorSensorBackRight = hardwareMap.get(ColorSensor.class, "csbl");
 
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
@@ -86,44 +86,35 @@ public class AANCTime extends LinearOpMode {
 
         if(opModeIsActive()) {
 
-             land();
-             drive(0.5, 0);
-             turn(0.5, 180);
-             drive(0.5, 0);
-             driveSide(0.5, -0);
-             if (colorSensorBackLeft.blue() < colorSensorBackRight.blue()) {
-                 driveSide(0.5, -0);
-                 drive(0.5, 0);
-                 drive(0.5, -0);
-                 turn(0.5, -90);//
-                 drive(0.5, 0);
-                 turn(0.5 , -45);
-                 drive(0.5, 0);
-                 turn(0.5, 180);
-                 putToken();
-                 drive(-0.5, 0);
-                 turn(-0.5, 45);
-                 drive(-0.5, 0);
-                 turn(90, 0);
-                 drive(0.5, 0);
-                 driveSide(0.5, -0);
-                 drive(0.5, 0);
-                 attach();
-             } else {
-                 driveSide(0.5, 0);
-             }
-
-
-            //500 milliseconds = 12 inches
-            drive(0.25, 1000);
+            land();
+            driveForward(0.25, 0); //
+            turnLeft(0.25 , 0); //180
+            driveForward(0.25, 0); //
+            sideRight(0.25, 0); //b
+            if(colorSensorBackRight.blue() > colorSensorBackLeft.blue()) {
+                sideRight(0.25, 0); //c
+                driveBackward(0.25, 0); //a
+                turnLeft(0.25, 0); //135 degrees
+                putToken();
+                turnLeft(0.25, 0); //45 degrees
+                driveBackward(0.25, 0); //a
+                sideRight(0.25, 0); //b + c
+                driveBackward(0.25, 0); //d + e
+                attach();
+            }else{
+                sideLeft(0.25, 0);
+                driveBackward(0.25, 0); //g
+                turnLeft(0.25, 0); //180 degrees
+                putToken();
+                driveBackward(0.25, 0); //d + e + g
+                attach();
+            }
 
         }
 
     }
 
-    public void drive(double power, int milliseconds){
-
-        //int milliseconds = inches * 0;
+    public void driveForward(double power, int milliseconds){
 
         frontRight.setPower(power);
         frontLeft.setPower(power);
@@ -137,51 +128,115 @@ public class AANCTime extends LinearOpMode {
         backLeft.setPower(0);
         backRight.setPower(0);
 
+        sleep(500);
+
     }
 
-    public void turn(double power, int degrees){
+    public void driveBackward(double power, int milliseconds){
 
-        int milliseconds = degrees * 0;
+        //int milliseconds = inches * 0;
 
-        frontRight.setPower(power);
-        frontLeft.setPower(power);
-        backLeft.setPower(power);
-        backRight.setPower(power);
+        frontRight.setPower(-power);
+        frontLeft.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(-power);
+
         sleep(milliseconds);
+
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+
+        sleep(500);
+
     }
 
-    public void driveSide(double power, int inches){
-
-        int milliseconds = inches * 0;
+    public void turnLeft(double power, int milliseconds){
 
         frontRight.setPower(power);
+        frontLeft.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
+
+        sleep(milliseconds);
+
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+
+        sleep(500);
+
+    }
+
+    public void turnRight(double power, int milliseconds){
+
+        frontRight.setPower(-power);
         frontLeft.setPower(power);
         backLeft.setPower(power);
-        backRight.setPower(power);
+        backRight.setPower(-power);
         sleep(milliseconds);
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
+
+    public void sideLeft(double power, int milliseconds){
+
+        frontRight.setPower(power);
+        frontLeft.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+
+        sleep(milliseconds);
+
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+
+        sleep(500);
+
+    }
+
+    public void sideRight(double power, int milliseconds){
+
+        frontRight.setPower(-power);
+        frontLeft.setPower(power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
+
+        sleep(milliseconds);
+
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+
+        sleep(500);
 
     }
 
     public void putToken(){
-        flipper.setPower(0.5);
-        sleep(0);
-        flipper.setPower(-0.5);
-        sleep(0);
+        grabber.setPower(0.25);
+        sleep(500);
     }
 
     public void land(){
-        flipper.setPower(0.5);
+        rack.setPower(0.5);
         sleep(500);
-        flipper.setPower(-0.5);
+        rack.setPower(-0.5);
         sleep(500);
-        drive(0.5, 0);
-        sleep(500);
+        //driveForward(0.5, 0);
+        //sleep(500);
     }
 
     public void attach(){
-        flipper.setPower(0.5);
+        rack.setPower(1);
         sleep(500);
-        flipper.setPower(-0.5);
+        rack.setPower(1);
         sleep(500);
     }
 

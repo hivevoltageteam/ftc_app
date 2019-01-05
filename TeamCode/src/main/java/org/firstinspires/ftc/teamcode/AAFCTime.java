@@ -73,8 +73,8 @@ public class AAFCTime extends LinearOpMode {
         grabber = hardwareMap.get(DcMotor.class, "grabber");
         flipper = hardwareMap.get(DcMotor.class, "flipper");
 
-        colorSensorBackRight = hardwareMap.get(ColorSensor.class, "csbr");
-        colorSensorBackLeft = hardwareMap.get(ColorSensor.class, "csbl");
+        colorSensorBackLeft = hardwareMap.get(ColorSensor.class, "csbr");
+        colorSensorBackRight = hardwareMap.get(ColorSensor.class, "csbl");
 
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
@@ -87,40 +87,34 @@ public class AAFCTime extends LinearOpMode {
         if(opModeIsActive()) {
 
             land();
-            driveForward(0.5, 0);
-            sideLeft(0.5, 0);
-            turnLeft(0.5, 180);
-            // drive(0.5, 0);
-            // driveSide(0.5, -0);
-            // if (colorSensorBackLeft.blue() < colorSensorBackRight.blue()) {
-            //     driveSide(0.5, -0);
-            //     drive(0.5, 0);
-            //     drive(0.5, -0);
-            //     turn(0.5, 180);
-            //     drive(0.5, -0);
-            //     attach();
-            // } else {
-            //     drive(0.5, 0);
-            //     turn(0.5, 45);
-            //     drive(0.5, 0);
-            //     putToken();
-            //     turn(0.5, -45);
-            //     drive(0.5,
-
-            //     telemetry.update();
-            // }
-
-
-            //500 milliseconds = 12 inches
-            driveForward(0.25, 1000);
+            driveForward(0.25, 0); //d
+            turnLeft(0.25 , 0); //180
+            driveForward(0.25, 0); //e
+            sideRight(0.25, 0); //b
+            if(colorSensorBackRight.blue() > colorSensorBackLeft.blue()) {
+                sideRight(0.25, 0); //c
+                driveBackward(0.25, 0); //a
+                turnLeft(0.25, 0); //135 degrees
+                putToken();
+                turnLeft(0.25, 0); //45 degrees
+                driveBackward(0.25, 0); //a
+                sideRight(0.25, 0); //b + c
+                driveBackward(0.25, 0); //d + e
+                attach();
+            }else{
+                sideLeft(0.25, 0);
+                driveBackward(0.25, 0); //g
+                turnLeft(0.25, 0); //180 degrees
+                putToken();
+                driveBackward(0.25, 0); //d + e + g
+                attach();
+            }
 
         }
 
     }
 
     public void driveForward(double power, int milliseconds){
-
-        //int milliseconds = inches * 0;
 
         frontRight.setPower(power);
         frontLeft.setPower(power);
@@ -134,26 +128,49 @@ public class AAFCTime extends LinearOpMode {
         backLeft.setPower(0);
         backRight.setPower(0);
 
+        sleep(500);
+
+    }
+
+    public void driveBackward(double power, int milliseconds){
+
+        //int milliseconds = inches * 0;
+
+        frontRight.setPower(-power);
+        frontLeft.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(-power);
+
+        sleep(milliseconds);
+
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+
+        sleep(500);
+
     }
 
     public void turnLeft(double power, int milliseconds){
-
-        //int milliseconds = degrees * 0;
 
         frontRight.setPower(power);
         frontLeft.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(power);
+
         sleep(milliseconds);
+
         frontRight.setPower(0);
         frontLeft.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+
+        sleep(500);
+
     }
 
     public void turnRight(double power, int milliseconds){
-
-        //int milliseconds = degrees * 0;
 
         frontRight.setPower(-power);
         frontLeft.setPower(power);
@@ -172,11 +189,15 @@ public class AAFCTime extends LinearOpMode {
         frontLeft.setPower(-power);
         backLeft.setPower(power);
         backRight.setPower(-power);
+
         sleep(milliseconds);
+
         frontRight.setPower(0);
         frontLeft.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+
+        sleep(500);
 
     }
 
@@ -186,34 +207,36 @@ public class AAFCTime extends LinearOpMode {
         frontLeft.setPower(power);
         backLeft.setPower(-power);
         backRight.setPower(power);
+
         sleep(milliseconds);
+
         frontRight.setPower(0);
         frontLeft.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
 
+        sleep(500);
+
     }
 
     public void putToken(){
-        flipper.setPower(0.5);
-        sleep(0);
-        flipper.setPower(-0.5);
-        sleep(0);
+        grabber.setPower(0.25);
+        sleep(500);
     }
 
     public void land(){
-        flipper.setPower(0.5);
+        rack.setPower(0.5);
         sleep(500);
-        flipper.setPower(-0.5);
+        rack.setPower(-0.5);
         sleep(500);
-        drive(0.5, 0);
-        sleep(500);
+        //driveForward(0.5, 0);
+        //sleep(500);
     }
 
     public void attach(){
-        flipper.setPower(0.5);
+        rack.setPower(1);
         sleep(500);
-        flipper.setPower(-0.5);
+        rack.setPower(1);
         sleep(500);
     }
 
