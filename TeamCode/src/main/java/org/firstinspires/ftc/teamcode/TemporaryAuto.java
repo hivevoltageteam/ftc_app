@@ -36,9 +36,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 
-@Autonomous(name="AANCTime", group="")
+/*
+
+Things to do:
+- Write a method to return the color value
+- Write Auto
+- Test Auto
+- Write TeleOp
+ */
+
+
+@Autonomous(name="AAFCTime", group="")
 //@Disabled
-public class AANCTime extends LinearOpMode {
+public class TemporaryAuto extends LinearOpMode {
 
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -77,24 +87,25 @@ public class AANCTime extends LinearOpMode {
         if(opModeIsActive()) {
 
             land();
-            driveForward(0.25, 0); //
+            driveForward(0.25, 4000);
+            putToken();
+            turnRight(0.25, 2500); //135 degrees
+            driveForward(0.25, 10000);
+            /*
+            land();
+            driveForward(0.25, 0); //d
             turnLeft(0.25 , 0); //180
-            driveBackward(0.25, 0); //
-            sideRight(0.25, 0); //c
+            driveForward(0.25, 0); //e
+            sideRight(0.25, 0); //b
             if(colorSensorBackRight.blue() > colorSensorBackLeft.blue()) {
-                sideRight(0.25, 0); //d
+                sideRight(0.25, 0); //c
                 driveBackward(0.25, 0); //a
-                driveForward(0.25, 0); //a
-                sideRight(0.25, 0); //e
-                turnRight(0.25, 0); //45 degrees
-                driveForward(0.25, 0); //b
+                turnLeft(0.25, 0); //135 degrees
                 putToken();
-                driveBackward(0.25, 0); //b
                 turnLeft(0.25, 0); //45 degrees
-                sideLeft(0.25, 0); //c + d + e
-                driveBackward(0.25, 0); //
-                turnLeft(0.25, 0); //
-                driveBackward();
+                driveBackward(0.25, 0); //a
+                sideRight(0.25, 0); //b + c
+                driveBackward(0.25, 0); //d + e
                 attach();
             }else{
                 sideLeft(0.25, 0);
@@ -104,7 +115,7 @@ public class AANCTime extends LinearOpMode {
                 driveBackward(0.25, 0); //d + e + g
                 attach();
             }
-
+            */
         }
 
     }
