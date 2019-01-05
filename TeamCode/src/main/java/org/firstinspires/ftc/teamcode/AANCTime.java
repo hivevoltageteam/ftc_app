@@ -35,7 +35,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-
+/*
 @Autonomous(name="AANCTime", group="")
 //@Disabled
 public class AANCTime extends LinearOpMode {
@@ -236,3 +236,4 @@ public class AANCTime extends LinearOpMode {
     }
 
 }
+*/

@@ -45,7 +45,7 @@ Things to do:
 - Write TeleOp
  */
 
-
+/*
 @Autonomous(name="Auto4890wifi", group="")
 //@Disabled
 public class MainAuto4890wifi extends LinearOpMode {
@@ -109,7 +109,7 @@ public class MainAuto4890wifi extends LinearOpMode {
                 land();
 
                 drive(0.5, 33.94);
-                 */
+
 
             telemetry.update();
                 /*
@@ -118,7 +118,7 @@ public class MainAuto4890wifi extends LinearOpMode {
                 sleep(4000);
                 turn(0.5, -180);
                 turn(0.5, 360);
-                */
+
         }
 
     }
@@ -329,3 +329,4 @@ public class MainAuto4890wifi extends LinearOpMode {
     }
 
 }
+*/

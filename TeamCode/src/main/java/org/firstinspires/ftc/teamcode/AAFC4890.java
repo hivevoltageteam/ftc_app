@@ -25,8 +25,8 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 
+/*
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -45,7 +45,7 @@ Things to do:
 - Write TeleOp
  */
 
-
+/*
 @Autonomous(name="AAFC4890wifi", group="")
 //@Disabled
 public class AAFC4890wifi extends LinearOpMode {
@@ -384,3 +384,4 @@ public class AAFC4890wifi extends LinearOpMode {
     }
 
 }
+*/

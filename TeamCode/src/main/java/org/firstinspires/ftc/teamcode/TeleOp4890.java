@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="TeleOp4890Compwifi", group="Linear Opmode")
 //@Disabled
-public class TeleOp4890Wifi extends LinearOpMode {
+public class TeleOp4890 extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 

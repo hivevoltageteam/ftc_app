@@ -232,7 +232,7 @@ public class TemporaryAuto extends LinearOpMode {
 
     public void land(){
         rack.setPower(0.5);
-        sleep(500);
+        sleep(1000);
         rack.setPower(-0.5);
         sleep(500);
         //driveForward(0.5, 0);
