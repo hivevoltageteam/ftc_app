@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="TeleOp4890Compwifi", group="Linear Opmode")
+@TeleOp(name="MainTeleOp4890wifi", group="Linear Opmode")
 //@Disabled
-public class TeleOp4890 extends LinearOpMode {
+public class MainTeleOp4890wifi extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -21,9 +21,9 @@ public class TeleOp4890 extends LinearOpMode {
     private DcMotor backLeft;
     private DcMotor backRight;
     private DcMotor rack;
-    private DcMotor slide;
     private DcMotor grabber;
     private DcMotor flipper;
+    private DcMotor flipper2;
 
     double rightPower;
     double leftPower;
@@ -39,17 +39,18 @@ public class TeleOp4890 extends LinearOpMode {
         backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         rack = hardwareMap.get(DcMotor.class, "rackAndPinion");
-        slide = hardwareMap.get(DcMotor.class, "slide");
         grabber = hardwareMap.get(DcMotor.class, "grabber");
         flipper = hardwareMap.get(DcMotor.class, "flipper");
+        flipper2 = hardwareMap.get(DcMotor.class, "flipper2");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.FORWARD);
         rack.setDirection(DcMotor.Direction.FORWARD);
-        slide.setDirection((DcMotor.Direction.FORWARD));
         grabber.setDirection(DcMotor.Direction.FORWARD);
+        flipper.setDirection(DcMotor.Direction.FORWARD);
+        flipper2.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
         runtime.reset();
@@ -60,15 +61,15 @@ public class TeleOp4890 extends LinearOpMode {
             leftPower = gamepad1.left_stick_y;
 
             if(gamepad1.dpad_right){
-                frontRight.setPower(0.6);
-                frontLeft.setPower(-0.6);
-                backLeft.setPower(0.6);
-                backRight.setPower(-0.6);
+                frontRight.setPower(1);
+                frontLeft.setPower(-1);
+                backLeft.setPower(1);
+                backRight.setPower(-1);
             }else if(gamepad1.dpad_left) {
-                frontRight.setPower(-0.6);
-                frontLeft.setPower(0.6);
-                backLeft.setPower(-0.6);
-                backRight.setPower(0.6);
+                frontRight.setPower(-1);
+                frontLeft.setPower(1);
+                backLeft.setPower(-1);
+                backRight.setPower(1);
             }else{
                 frontRight.setPower(0);
                 frontLeft.setPower(0);
@@ -85,36 +86,61 @@ public class TeleOp4890 extends LinearOpMode {
 
             }
 
-            if(gamepad1.dpad_up){
-                slide.setPower(1);
-            }else if(gamepad1.dpad_down){
-                slide.setPower(-1);
-            }else{
-                slide.setPower(0);
-            }
+            // if(gamepad1.dpad_up){
+            //     flipper.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //     flipper2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            if(gamepad1.right_trigger > 0){
-                flipper.setPower(0.5);
-            }else if(gamepad1.left_trigger > 0){
-                flipper.setPower(-0.5);
-            }else{
-                flipper.setPower(0);
-            }
+            //     flipper.setTargetPosition(1440);
+            //     flipper.setTargetPosition(1440);
 
-            if(gamepad1.x){
+            //     flipper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //     flipper2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            //     flipper.setPower(0.8);
+            //     flipper2.setPower(0.8);
+            // }else if(gamepad1.dpad_down){
+            //     flipper.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //     flipper2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            //     flipper.setTargetPosition(-1440);
+            //     flipper.setTargetPosition(-1440);
+
+            //     flipper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //     flipper2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            //     flipper.setPower(0.8);
+            //     flipper2.setPower(0.8);
+            // }else{
+            //     flipper.setPower(0);
+            //     flipper2.setPower(0);
+            // }
+
+            if(gamepad1.left_bumper){
                 grabber.setPower(1);
-            }else if(gamepad1.b){
+            }else if(gamepad1.right_bumper){
                 grabber.setPower(-1);
             }else{
                 grabber.setPower(0);
             }
 
+            if(gamepad1.dpad_up){
+                flipper.setPower(-0.8);
+                flipper2.setPower(-0.8);
+            }else if(gamepad1.dpad_down){
+                flipper.setPower(0.8);
+                flipper2.setPower(0.8);
+            }else{
+                flipper.setPower(0);
+                flipper2.setPower(0);
+            }
 
-            frontLeft.setPower((0.6)*leftPower);
-            frontRight.setPower((0.6)*rightPower);
-            backLeft.setPower((0.6)*leftPower);
-            backRight.setPower((0.6)*rightPower);
+
+            frontLeft.setPower(leftPower);
+            frontRight.setPower(rightPower);
+            backLeft.setPower(leftPower);
+            backRight.setPower(rightPower);
 
         }
     }
+
 }
