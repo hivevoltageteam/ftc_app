@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="MainTeleOp4890wifi", group="Linear Opmode")
 //@Disabled
-public class MainTeleOp extends LinearOpMode {
+public class TeleOp2Drivers extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -60,25 +60,25 @@ public class MainTeleOp extends LinearOpMode {
             backLeft.setPower(leftPower);
             backRight.setPower(rightPower);
 
-            if(gamepad1.dpad_up){
+            if(gamepad2.dpad_up){
                 latcher.setPower(1);
-            }else if(gamepad1.dpad_down){
+            }else if(gamepad2.dpad_down){
                 latcher.setPower(-1);
             }else{
                 latcher.setPower(0);
             }
 
-            if(gamepad1.y){
+            if(gamepad2.y){
                 bucket.setPower(1);
-            }else if(gamepad1.a){
+            }else if(gamepad2.a){
                 bucket.setPower(-1);
             }else{
                 bucket.setPower(0);
             }
 
-            if(gamepad1.right_bumper){
+            if(gamepad2.right_bumper){
                 arm.setPower(1);
-            }else if(gamepad1.left_bumper){
+            }else if(gamepad2.left_bumper){
                 arm.setPower(-1);
             }else{
                 arm.setPower(0);

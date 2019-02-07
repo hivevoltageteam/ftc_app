@@ -76,6 +76,14 @@ public class MainTeleOp extends LinearOpMode {
                 bucket.setPower(0);
             }
 
+            if(gamepad1.right_bumper){
+                arm.setPower(1);
+            }else if(gamepad1.left_bumper){
+                arm.setPower(-1);
+            }else{
+                arm.setPower(0);
+            }
+
             if(gamepad1.dpad_right){
                 frontRight.setPower(1);
                 frontLeft.setPower(-1);
