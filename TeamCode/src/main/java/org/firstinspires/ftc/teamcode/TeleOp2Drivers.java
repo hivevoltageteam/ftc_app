@@ -59,32 +59,31 @@ public class TeleOp2Drivers extends LinearOpMode {
             frontRight.setPower(rightPower);
             backLeft.setPower(leftPower);
             backRight.setPower(rightPower);
-
-            if(gamepad2.dpad_up){
+            if(gamepad2.dpad_up) {
                 latcher.setPower(1);
-            }else if(gamepad2.dpad_down){
+            }else if(gamepad2.dpad_down) {
                 latcher.setPower(-1);
-            }else{
+            }else {
                 latcher.setPower(0);
             }
 
-            if(gamepad2.y){
+            if(gamepad2.y) {
                 bucket.setPower(1);
-            }else if(gamepad2.a){
+            }else if(gamepad2.a) {
                 bucket.setPower(-1);
-            }else{
+            }else {
                 bucket.setPower(0);
             }
 
-            if(gamepad2.right_bumper){
+            if(gamepad2.right_bumper) {
                 arm.setPower(1);
-            }else if(gamepad2.left_bumper){
+            }else if(gamepad2.left_bumper) {
                 arm.setPower(-1);
-            }else{
+            }else {
                 arm.setPower(0);
             }
 
-            if(gamepad1.dpad_right){
+            if(gamepad1.dpad_right) {
                 frontRight.setPower(1);
                 frontLeft.setPower(-1);
                 backLeft.setPower(1);
@@ -94,7 +93,7 @@ public class TeleOp2Drivers extends LinearOpMode {
                 frontLeft.setPower(1);
                 backLeft.setPower(-1);
                 backRight.setPower(1);
-            }else{
+            }else {
                 frontRight.setPower(0);
                 frontLeft.setPower(0);
                 backLeft.setPower(0);
