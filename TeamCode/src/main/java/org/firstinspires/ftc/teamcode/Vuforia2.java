@@ -80,8 +80,8 @@ import java.util.List;
  * is explained below.
  */
 
-@TeleOp(name="Concept: Vuforia Navigation", group ="Concept")
-@Disabled
+@TeleOp(name="Vuforia2", group ="")
+//@Disabled
 public class Vuforia2 extends LinearOpMode {
 
     public static final String TAG = "Vuforia Navigation Sample";
@@ -118,7 +118,7 @@ public class Vuforia2 extends LinearOpMode {
          * Once you've obtained a license key, copy the string from the Vuforia web site
          * and paste it in to your code on the next line, between the double quotes.
          */
-        parameters.vuforiaLicenseKey = " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+        parameters.vuforiaLicenseKey = "AYI8I2T/////AAABmcGuVH/R50l2vwdWKHNUFHGOO85LO6wfEi+ruslSPW4m7sWGRj9cGcEHgAyaewm8dJ8O49vIGsoSxRKMWobSHaQZtXyriMPGjCUCjSHvnCDDHlk3a1yvfuWn04yEJCaiOCsvyL74+ym7ZAwG6uqmtm0ZieVgesYNAsZiP4+fnWdVcHxvvqGRNrKKLbvHpMLYSgHnlTeUJn74S6KruDD+NrO74Sx8SG4Al0uqOdfIhz/TEGRE0kaSOvFxxI2mDOY15ah7D7p+Lkxm4S6DSWoyNs2Z997SgfVSofHhatyIXBpGYjoerVmNQ/CRPQMNZ4nSZwC+0e700Wlw7L5jO1ELPrwMtQagJgGn6tkOqAaHsEXg";
         /*
          * We also indicate which camera on the RC that we wish to use.
          * Here we chose the back (HiRes) camera (for greater range), but

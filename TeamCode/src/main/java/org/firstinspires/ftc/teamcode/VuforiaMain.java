@@ -49,7 +49,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name="Concept", group ="Concept")
+@TeleOp(name="VuforiaMain", group ="")
 //@Disabled
 public class VuforiaMain extends LinearOpMode {
 

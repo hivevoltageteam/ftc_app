@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="MainTeleOp4890wifi", group="Linear Opmode")
+@TeleOp(name="TeleOp1Driver", group="")
 //@Disabled
 public class TeleOp1Driver extends LinearOpMode {
 

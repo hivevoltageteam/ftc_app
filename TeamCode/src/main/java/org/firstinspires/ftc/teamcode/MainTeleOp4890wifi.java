@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="MainTeleOp4890wifi", group="Linear Opmode")
-//@Disabled
+@Disabled
 public class MainTeleOp4890wifi extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();

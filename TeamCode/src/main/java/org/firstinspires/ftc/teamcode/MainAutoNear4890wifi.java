@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Autonomous(name="MainAutoNear4890wifi", group="")
+@Disabled
 public class MainAutoNear4890wifi extends LinearOpMode{
 
     private DcMotor frontLeft;
@@ -82,8 +83,6 @@ public class MainAutoNear4890wifi extends LinearOpMode{
         frontRight.setPower(0);
         frontLeft.setPower(0);
         backLeft.setPower(0);
-        backRight.setPower(0);
-
         sleep(500);
 
     }
